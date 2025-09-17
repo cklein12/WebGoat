@@ -1,0 +1,31 @@
+<?php
+// Simulated user input (DO NOT do this in a real application)
+$user_input = $_POST['username'];
+
+// Connect to the database (Replace with your actual database credentials)
+$mysqli = new mysqli("localhost", "username", "password", "database_name");
+
+// Check for a database connection error
+if ($mysqli->connect_error) {
+die("Connection failed: " . $mysqli->connect_error);
+}
+
+// Vulnerable query construction (DO NOT do this in a real application)
+$query = "SELECT * FROM users WHERE username = '$user_input'";
+
+// Execute the query (SQL injection vulnerability here)
+$result = $mysqli->query($query);
+
+// Fetch and display results (not relevant for this example)
+if ($result) {
+while ($row = $result->fetch_assoc()) {
+echo "Username: " . $row['username'] . "<br>";
+}
+$result->close();
+} else {
+echo "Query error: " . $mysqli->error;
+}
+
+// Close the database connection
+$mysqli->close();
+?>
